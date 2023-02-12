@@ -7,12 +7,14 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 import com.app.Menus.Menu;
+import com.app.Entities.Camera;
 import com.app.Menus.MainMenu;
 import com.app.helper.Scene;
 import com.app.helper.State;
 
 public class App extends JFrame implements KeyListener {
     private State stateMgr;
+    private Camera camera;
     private Scene scene;
     private Menu menu;
     //
@@ -27,9 +29,10 @@ public class App extends JFrame implements KeyListener {
     public App() throws IOException {
         startupConfig();
         //
-        this.add(menu);
-        this.add(scene);
-
+        this.add(camera);
+        //camera.add(scene);
+        
+        //
         this.setVisible(true);
     }
     /**
@@ -43,6 +46,7 @@ public class App extends JFrame implements KeyListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.addKeyListener(this);
         //
+        camera = new Camera();
         stateMgr = new State();
         stateMgr.state = State.gameState.Menu;
         menu = new MainMenu();
