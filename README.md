@@ -1,6 +1,6 @@
 # GameEngine
 
-##My first attempt at a sort of game engine
+## This is my first attempt at any sort of game engine
 it should include
 - TODO
   - ~~Vectors~~
@@ -12,5 +12,5 @@ it should include
   - ~~State Manager~~
   - More Features and Cusimizability
   
-#Support Me by Staring this repo
+# Support Me by Staring this repo
 please star it
