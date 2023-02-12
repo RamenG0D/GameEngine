@@ -2,7 +2,7 @@
 
 ##My first attempt at a sort of game engine
 it should include
--TODO
+- TODO
   - ~~Vectors~~
   - ~~Image Renderer/Loader~~
   - ~~A Player~~
