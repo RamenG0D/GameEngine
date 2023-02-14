@@ -5,9 +5,6 @@ package com.app.helper;
  * @author RamenGOD
  */
 public class Vector2 {
-    private boolean isClamped = false;
-    private int max;
-    private int min;
     public int x;
     public int y;
     //
@@ -26,23 +23,8 @@ public class Vector2 {
     }
     //
     public void add(int x, int y) {
-        if(isClamped) {
-            this.x += Math.min(x, max);
-            this.y += Math.min(y, max);
-        } else {
-            this.x += x;
-            this.y += y;
-        }
-    }
-    //
-    public void subtract(int x, int y) {
-        if(isClamped) {
-            this.x += Math.max(x, min);
-            this.y += Math.max(y, min);
-        } else {
-            this.x += x;
-            this.y += y;
-        }
+        this.x += x;
+        this.y += y;
     }
     /**
      * set the min and max value of this vector
@@ -50,10 +32,11 @@ public class Vector2 {
      * @param max the maximum value this vector can be set to
      */
     public void clamp(int min, int max) {
-        this.isClamped = true;
         //
-        this.max = max;
-        this.min = min;
+        if(x > max) { Math.min(x, max); System.out.println("tests failed" + "1 " + x); }
+        else if(y > max) { Math.min(y, max); System.out.println("tests failed" + "2 " + y); }
+        else if(x < min) { Math.max(x, min); System.out.println("tests failed" + "3 " + x); }
+        else if(y < min) { Math.max(y, min); System.out.println("tests failed" + "4 " + y); }
         //
     }
     //

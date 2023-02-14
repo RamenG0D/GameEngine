@@ -4,15 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import javax.swing.JComponent;
+
+import com.app.Objects.Tile;
+import com.app.Scenes.Scene;
 import com.app.helper.Entity;
-import java.awt.Point;
 import com.app.helper.Vector2;
 
 import java.awt.Image;
 
 public class Player extends JComponent implements Entity {
     private Vector2 velocity = new Vector2();
-    private Rectangle playerCollider;
     private double health;
     private Image img;
     public int x;
@@ -23,18 +24,13 @@ public class Player extends JComponent implements Entity {
         this.health = health;
         this.x = x;
         this.y = y;
-        this.playerCollider = new Rectangle(x, y, 65, 100);
         this.img = PlayerSprite;
-        velocity.clamp(-5, 5);
         //
     }
     //
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        //
-        g.setColor(Color.RED);
-        g.drawRect(playerCollider.x, playerCollider.y, playerCollider.width, playerCollider.height);
         //
         g.drawImage(img, x, y, null);
         //
@@ -69,37 +65,44 @@ public class Player extends JComponent implements Entity {
 		this.health += health;
 	}
     //
-    public Rectangle getCollider() {
-        return playerCollider;
-    }
-    //
-    public void setCollider(Rectangle playerCollider) {
-        this.playerCollider = playerCollider;
-    }
-    //
-    public boolean isColliding(Rectangle other) {
-        if(playerCollider.intersects(other)) {
-            return true;
+    public boolean isColliding(Scene currentScene) {
+        for(Tile tile : currentScene.getTiles()) {
+            if(tile.getId() != 0 /* checks the tile to make sure it not air */) {
+                //
+                if(x + velocity.x == tile.getX() || x + velocity.x == tile.getY()) { 
+                    System.out.println("Collision was detected!");
+                    return true;
+                }
+                //
+            }
+            //
         }
-        return false;
-    }
-    //
-    public boolean isColliding(Point other) {
-        if(playerCollider.contains(other)) {
-            return true;
-        }
+        System.out.println("no Collision detected");
         return false;
     }
     //
     public void continueMoving() {
         //
-
+        if (velocity.x > 0) {
+            velocity.add(-1, 0);
+            x += velocity.x;
+        } else if (velocity.x < 0) {
+            velocity.add(1, 0);
+            x -= velocity.x;
+        }
         //
     }
     //
     @Override
     public void gravity() {
         velocity.add(0, gravity);
-        this.y += gravity;
+        this.y += gravity * speed;
+    }
+    //
+    @Override
+    public void update(float delta) {
+        //
+        continueMoving();
+        //
     }
 }

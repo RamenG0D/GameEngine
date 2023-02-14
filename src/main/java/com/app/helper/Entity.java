@@ -10,6 +10,7 @@ import java.awt.Graphics;
  */
 public interface Entity {
     //
+    public int speed = 300;
     public int gravity = 4;
     //
     public boolean isHostile();
@@ -25,5 +26,7 @@ public interface Entity {
     public int getX();
     //
     public int getY();
+    //
+    public void update(float delta);
     //
 }

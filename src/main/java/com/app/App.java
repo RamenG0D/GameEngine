@@ -7,9 +7,9 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 import com.app.Menus.Menu;
+import com.app.Scenes.Scene;
 import com.app.Entities.Camera;
 import com.app.Menus.MainMenu;
-import com.app.helper.Scene;
 import com.app.helper.State;
 
 public class App extends JFrame implements KeyListener {
@@ -30,8 +30,7 @@ public class App extends JFrame implements KeyListener {
         startupConfig();
         //
         this.add(camera);
-        //camera.add(scene);
-        
+        camera.setPanel(scene);
         //
         this.setVisible(true);
     }
@@ -53,20 +52,28 @@ public class App extends JFrame implements KeyListener {
         scene = new Scene();
         //
     }
-    // does key inputs for the window / same as an inputHandler
+    /**
+     * does key inputs for the window(same as an inputHandler)
+     * 
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+        /*
         if (stateMgr.state != State.gameState.Game) {
             return;
         }
+        */
         if (keyCode == KeyEvent.VK_D) {
             scene.getPlayer().x += scene.getPlayer().getVelocity().x + 1;
+            scene.getPlayer().getVelocity().clamp(-5, 5);
             scene.getPlayer().getVelocity().add(1, 0);
         } else if (keyCode == KeyEvent.VK_A) {
             scene.getPlayer().x -= scene.getPlayer().getVelocity().x + 1;
-            scene.getPlayer().getVelocity().subtract(1, 0);
+            scene.getPlayer().getVelocity().clamp(-5, 5);
+            scene.getPlayer().getVelocity().add(1, 0);
         }
+        System.out.println("x: " + scene.getPlayer().getVelocity().x);
     }
     /**
      * paints to the window and also conditionally switchs to whatever 
@@ -76,18 +83,12 @@ public class App extends JFrame implements KeyListener {
         super.paint(g);
         //
         this.repaint();
-        if(stateMgr.state == State.gameState.Menu) scene.setVisible(false);
-        //
-        if(stateMgr.state == State.gameState.Game) return;
-        
         //
     }
     //
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
     //
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 }

@@ -14,33 +14,7 @@ public class Camera extends JPanel {
     public Camera() {
         //
         this.setSize(720, 600);
-        this.setBackground(Color.BLUE);
-        //
-        panel = new testPanel();
-        this.add(panel);
-        //
-    }
-    //
-    class testPanel extends JComponent {
-        //
-        public testPanel() {
-            this.setSize(720, 600);
-            this.setBackground(Color.BLACK);
-        }
-        //
-        @Override
-        public void paint(Graphics g) {
-            super.paint(g);
-            //
-            draw(g);
-        }
-        //
-        public void draw(Graphics g) {
-            //
-            g.setColor(Color.RED);
-            g.fillRect(0, 0, 400, 400);
-            //
-        }
+        this.setBackground(Color.BLACK);
         //
     }
     //
@@ -51,7 +25,9 @@ public class Camera extends JPanel {
         draw(g);
     }
     public void draw(Graphics g) {
-        g.translate(x, y);
+        if(panel == null) return;
+        setPosition(-x, -y);
+        setClip(g);
         panel.paint(g);
         //
     }
@@ -67,11 +43,22 @@ public class Camera extends JPanel {
     public void setPanel(JComponent panel) {
         this.panel = panel;
     }
+    //
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     /**
      * @return int return the x
      */
     public int getX() {
         return x;
+    }
+    /**
+     * sets the cameras cliping bounds all things outside it will not be rendered
+     */
+    public void setClip(Graphics g) {
+        g.setClip(-x, -y, 720, 600);
     }
     /**
      * @param x the x to set
